@@ -54,50 +54,50 @@ done
 # apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
-msg "Installing prerequisites..."
-echo "samba-common samba-common/dhcp boolean false" | debconf-set-selections
-apt-get -qqy install \
-  git curl network-manager net-tools samba &>/dev/null
+#msg "Installing prerequisites..."
+#echo "samba-common samba-common/dhcp boolean false" | debconf-set-selections
+#apt-get -qqy install \
+#  git curl network-manager net-tools samba &>/dev/null
 
 # Clone tuya-convert
-msg "Cloning tuya-convert..."
-git clone --quiet https://github.com/ct-Open-Source/tuya-convert
+#msg "Cloning tuya-convert..."
+#git clone --quiet https://github.com/ct-Open-Source/tuya-convert
 
 # Configure tuya-convert
-msg "Configuring tuya-convert..."
-./configure_tuya-convert.sh
+#msg "Configuring tuya-convert..."
+#./configure_tuya-convert.sh
 
 # Install tuya-convert
-msg "Running tuya-convert/install_prereq.sh..."
-cd tuya-convert
-./install_prereq.sh &>/dev/null
-systemctl disable dnsmasq &>/dev/null
-systemctl disable mosquitto &>/dev/null
+#msg "Running tuya-convert/install_prereq.sh..."
+#cd tuya-convert
+#./install_prereq.sh &>/dev/null
+#systemctl disable dnsmasq &>/dev/null
+#systemctl disable mosquitto &>/dev/null
 
 # Customize OS
-msg "Customizing OS..."
-cat <<EOL >> /etc/samba/smb.conf
-[tuya-convert]
-  path = /root/tuya-convert
-  browseable = yes
-  writable = yes
-  public = yes
-  force user = root
-EOL
-cat <<EOL >> /etc/issue
-  ******************************
-    The tuya-convert files are
-    shared using samba at
-    \4{eth0}
-  ******************************
+#msg "Customizing OS..."
+#cat <<EOL >> /etc/samba/smb.conf
+#[tuya-convert]
+#  path = /root/tuya-convert
+#  browseable = yes
+#  writable = yes
+#  public = yes
+#  force user = root
+#EOL
+#cat <<EOL >> /etc/issue
+#  ******************************
+#    The tuya-convert files are
+#    shared using samba at
+#    \4{eth0}
+#  ******************************
 
-  Login using the following credentials
-    username: root
-    password: tuya
+#  Login using the following credentials
+#    username: root
+#    password: tuya
 
-EOL
-sed -i "s/^\(root\)\(.*\)\(\/bin\/bash\)$/\1\2\/root\/login.sh/" /etc/passwd
+#EOL
+#sed -i "s/^\(root\)\(.*\)\(\/bin\/bash\)$/\1\2\/root\/login.sh/" /etc/passwd
 
 # Cleanup
-msg "Cleanup..."
-rm -rf /root/install_tuya-convert.sh /var/{cache,log}/* /var/lib/apt/lists/*
+#msg "Cleanup..."
+#rm -rf /root/install_tuya-convert.sh /var/{cache,log}/* /var/lib/apt/lists/*
